@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Freelancer - Start Bootstrap Theme</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link rel="stylesheet" th:href="@{/css/styles.css}" />
+        
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="../../index.html">MediSoft</a>
+                <button class="navbar-toggler text-uppercase font-weight-bold bg-secondary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <div id="header">
+                        <nav> <!-- Aqui estamos iniciando la nueva etiqueta nav -->
+                            <ul class="nav">
+                                <li><a href="">PACIENTE</a>
+                                    <ul>                                        
+                                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="../admin_paciente/regpaciente_agre.html">Registrar Paciente</a></li>
+                                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="../admin_paciente/regPaciente_modif.html">Modificarar Paciente</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="">MEDICO</a>
+                                    <ul>
+                                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="regMedico_agre.html">Registrar Medico</a></li>
+                                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="regMedico_modif.html">Modificarar Medico</a></li> 
+                                    </ul>
+                                </li> 
+                                <li><a href="">CONSULTORIO</a>
+                                    <ul>
+                                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="../admin_consultorio/regConsul_agre.html">Registrar Consultorio</a></li>
+                                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="../admin_consultorio/regConsul_modif.html">Modificarar Consultorio</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="../admin.html">Home Admin</a>
+                            </ul>
+                        </nav><!-- Aqui estamos cerrando la nueva etiqueta nav -->
+                    </div>  
+                </div>
+            </div>
+        </nav>
+        <!-- Portfolio Section-->
+        <section style="padding: 150px 0px 0px 0px;" class="page-section portfolio" id="portfolio">
+            <div class="container">  
+                                                                            
+                <form action=""  method="post" id="regMedico_agre" enctype="multipart/form-data">
+                    <div class="row" style="border: 2px solid black; border-radius: 10px 10px 10px 10px">
+                        <p></p> <br>                                   
+                        <h5 class=" text-tercery" style="text-align:center;font-size: 25px">Registrar Medico/a</h5>                        
+                        <div class="col-md-6"><!-- inicia lado izquierdo del formulario-->
+                            <label class= "text-tercery" aling="right"><b>Nombre: </b></label>                                    
+                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Digite su nombre"   >
+                            <br>
+                            
+                            <label class= "text-tercery" for="buttondropdown"><b>Tipo de documento: </b></label>                                                                               
+                                <select name="tipodocumento" id="tipodocumentos" class="form-control" font style="text-transform: uppercase">
+                                    <option value="">Seleccione</option>
+                                    <option value="NUP">NUiP</option>
+                                    <option value="Registro civil">Registro civil</option>
+                                    <option value="Tarjeta de identidad">Tarjeta de identidad</option>
+                                    <option value="Cedula de ciudadania">Cedula de ciudadania</option>
+                                    <option value="Cedula de extranjeria">Cedula de extranjeria</option>                                      
+                                </select>                                                                                        
+                            <br>
+                            <label class= "text-tercery"><b>Fecha de nacimiento: </b></label>                                    
+                            <input type="date" class="form-control" name="fechanacimiento" id="fechanacimiento" placeholder="Fecha de nacimiento"  >                                        
+                            <br>
+                            <label class= "text-tercery"><b>Número de telefono celular: </b></label>                                    
+                            <input type="int" class="form-control" name="numerocelular" id="numerocelular"placeholder="Número de telefono celular"  >                       
+                            <br>
+                            <label class= "text-tercery"for="buttondropdown"><b>Especialidad: </b></label>
+                            <select name="especialidad" id="especialidad" class="form-control" style="text-transform: uppercase" >
+                                <option value="">Seleccione</option>
+                                <option value="mcgeneral">Medicina General</option>
+                                <option value="mcinterno">Medicina Interna</option>
+                                <option value="mcpediatra">Pediatria</option>
+                                <option value="mcginecologo">Ginecologia</option>
+                                <option value="mchematologo">Hematologia</option>
+                                <option value="mcreumatologo">Reumatologia</option>
+                            </select>
+                            <br>
+                            <label class= "text-tercery"><b>Usuario: </b></label>
+                            <input type="text" class="form-control" name="usermedico" id="usermedico" placeholder="Nuevo usuario"  >
+                            <br>
+                        </div><!-- finlizalado izquierdo del formulario-->                    
+                        <div class="col-md-6"><!-- inicia lado derecho del formulario-->
+                            <label class= "text-tercery"><b>Apellido: </b></label>                                    
+                            <input type="text" class="form-control" name="apellido" id="apellido" placeholder="Digite su apellido"  >
+                            <br>
+                            <label class= "text-tercery" ><b>Edad: </b></label>                                    
+                            <input type="int" class="form-control" name="edad" id="edad" placeholder="Edad"  >
+                            <br>
+                            <label class= "text-tercery" for="buttondropdown"><b>Genero: </b></label>                                    
+                            <select name="tipogenero" id="tipogenero"  class="form-control" font style="text-transform: uppercase" >
+                                <option value="">Seleccione</option>
+                                <option value="FEMENINO">FEMENINO</option>
+                                <option value="MASCULINO">MASCULINO</option>
+                                <option value="NO BINARIO">NO BINARIO</option>
+                            </select>         
+                            <br>
+                            <label class= "text-tercery"><b>Correo electronico: </b></label>                                    
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Correo electronico">
+                            <br>
+                            <label class= "text-tercery"><b>Consultorio: </b></label>
+                            <input type="text" class="form-control" name="asigconsultorio" id="asigconsultorio" placeholder="asignar consultorio" >
+                            <br>
+                            <label class= "text-tercery"><b>Password: </b></label>
+                            <input type="password" class="form-control" name="passmedico" id="passmedico" placeholder="Nueva contraseña" >                       
+                            <br>
+                        </div><!-- finaliza lado derecho del formulario-->                                        
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4" style="width: 33.33%;display: flex;justify-content: center">                                                         
+                            <button type="submit" class=" btn bg-secondary rounded submit px-3">
+                                <i class="fa fa-user me-2 text-tercery mb-0"></i>
+                                <strong> Registrar Medico </strong></button>
+                        </div>
+                        <div class="col-md-4"></div>
+                        <p></p><br>
+                    </div>                
+                </form>
+                <div class="row">
+                    <div class="col-md-12"><p class="text-tercery" style="text-align: justify; font-size: 10px">
+                        En cumplimiento de las disposiciones de la Ley 1581 de 2012 y del Decreto 
+                        reglamentario 1377 de 2013 que desarrollan el derecho de habeas data, solicitamos 
+                        su autorización para para que (Agenda Médic) en calidad de Responsable del 
+                        Tratamiento pueda recopilar, almacenar, archivar, copiar, analizar, usar y consultar los 
+                        datos que se señalan a continuación </p></div>
+                </div>                                                           
+            </div>
+        </section>                
+        <!-- Footer-->
+        <footer class="footer text-center">
+            <div class="container">
+                <div class="row">
+                    <!-- Footer Location-->
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <h4 class="text-uppercase mb-4">Direccion</h4>
+                        <p class="pcolor mb-0">
+                            Calle 31 No 33 bis 05
+                            <br />
+                            Barrio Quinta Dania Bucaramanga
+                        </p>
+                    </div>
+                    <!-- Footer Social Icons-->
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <h4 class="text-uppercase mb-4">SIGUENOS EN REDES</h4>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-linkedin-in"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-dribbble"></i></a>
+                    </div>
+                    <!-- Footer About Text-->
+                    <div class="col-lg-4">
+                        <p class="pcolor mb-0">
+                        </p>
+                    </div>
+                    
+                </div>
+            </div>
+        </footer>
+        <a href="#page-top"><span id="back-top" class="text-center active"><i class="fa fa-angle-up"></i></span></a>
+        
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script th:src="@{/js/scripts.js}"></script>        
+        <!--<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>-->
+    </body>
+</html>

@@ -1,0 +1,70 @@
+//validacion de formulrio horario de atencion (medico)
+const horariodeatencion = document.getElementById('horariodeatencion');
+const fechaatencion = document.getElementById('fechaatencion');
+const horainicio = document.getElementById('horainicio');
+const horafin = document.getElementById('horafin');
+horariodeatencion.addEventListener('submit',function (e){
+    e.preventDefault(); 
+   if((fechaatencion.value.length > 0) && (horainicio.value.length > 0) && (horafin.value.length > 0)){
+        /*horario de atencion.submit();*/        
+        console.log("Enviando formulario .....");
+    }else{
+        console.log("Error Enviando formulario .....");
+    }
+})
+
+//validacion de formulario pedir historia clinica (medico)
+const pedirhistoclinica = document.getElementById('pedirhistoclinica');
+const nombrepedirhc = document.getElementById('nombrepedirhc');
+const nundocpedirhc = document.getElementById('nundocpedirhc');
+pedirhistoclinica.addEventListener('submit',function (e){
+    e.preventDefault(); 
+   if((nombreverhc.value.length > 0) && (nundocverhc.value.length > 0) ){
+        /*historia clinica.submit();*/        
+        console.log("Enviando formulario .....");
+    }else{
+        console.log("Error Enviando formulario .....");
+    }
+})
+
+//validacion de formulario ver citas medicas (medico)
+const vercitasmedi = document.getElementById('vercitasmedi');
+const fechavercita = document.getElementById('fechavercita');
+vercitasmedi.addEventListener('submit',function (e){
+    e.preventDefault(); 
+   if((fechavercita.value.length > 0) ){
+        /*ver cita medica.submit();*/        
+        console.log("Enviando formulario .....");
+    }else{
+        console.log("Error Enviando formulario .....");
+    }
+})
+
+//validacion de formulario ver historia clinica (medico)
+const verhistoclinica = document.getElementById('verhistoclinica');
+const nombreverhc = document.getElementById('nombreverhc');
+const tipodocverhc = document.getElementById('tipodocverhc');
+const fechanacverhc = document.getElementById('fechanacverhc');
+const celularverhc = document.getElementById('celularverhc');
+const comentarioverhc = document.getElementById('comentarioverhc');
+const apellidoverhc = document.getElementById('apellidoverhc');
+const nundocverhc = document.getElementById('nundocverhc');
+const edadverhc = document.getElementById('edadverhc');
+const generoverhc = document.getElementById('generoverhc');
+const antecefamverhc = document.getElementById('antecefamverhc');
+const emailverhc = document.getElementById('emailverhc');
+
+verhistoclinica.addEventListener('submit',function (e){
+    e.preventDefault(); 
+   if((nombreverhc.value.length > 0) && (tipodocverhc.value.length > 0) && 
+      (fechanacverhc.value.length > 0) && (celularverhc.value.length > 0) &&
+      (comentarioverhc.value.length > 0) && (apellidoverhc.value.length > 0) &&
+      (nundocverhc.value.length > 0) && (edadverhc.value.length > 0) &&
+      (generoverhc.value.length > 0) && (antecefamverhc.value.length > 0) &&
+      (emailverhc.value.length > 0) ){
+        /*historia clinica.submit();*/        
+        console.log("Enviando formulario .....");
+    }else{
+        console.log("Error Enviando formulario .....");
+    }
+})
