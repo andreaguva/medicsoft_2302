@@ -1,8 +1,7 @@
-package com.backend.bancog58.Controller;
-
-import com.backend.bancog58.Models.Medico;
-//import com.backend.bancog58.Dao.MedicoDao;
-import com.backend.bancog58.Service.MedicoService;
+package com.backend.medicsoft.Controller;
+import com.backend.medicsoft.Models.Historiaclinica;
+//import com.backend.bancog58.Dao.CuentaDao;
+import com.backend.medicsoft.Service.HistoriaService;
 
 import java.util.List;
 
@@ -25,29 +24,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/medico")
-public class MedicoController {
-   //@Autowired
-    //private ClienteDao clienteDao; 
+@RequestMapping("/historia")
+public class HistoriaController {
+    //@Autowired
+    //private ClienteDao dao; 
     @Autowired
-    private MedicoService medicoService;
+    private HistoriaService servicio;
     
     //Método Post para Insertar datos en la tabla de la BD
     @PostMapping(value="/")
     @ResponseBody
-    public ResponseEntity<Medico> agregar(@RequestBody Medico medico){   
-        Medico obj = medicoService.save(medico);
+    public ResponseEntity<Historiaclinica> agregar(@RequestBody Historiaclinica dato){   
+        Historiaclinica obj = servicio.save(dato);
         return new ResponseEntity<>(obj, HttpStatus.OK);     
     }
    
 
     //Método Delete para Eliminar datos en la tabla de la BD
     @DeleteMapping(value="/{id}") 
-    public ResponseEntity<Medico> eliminar(@PathVariable String id){ 
+    public ResponseEntity<Historiaclinica> eliminar(@PathVariable Integer id){ 
         
-        Medico obj = medicoService.findById(id); 
+        Historiaclinica obj = servicio.findById(id); 
             if(obj!=null) //Encontró al registro
-            medicoService.delete(id);
+            servicio.delete(id);
             else 
                 return new ResponseEntity<>(obj, HttpStatus.INTERNAL_SERVER_ERROR); 
             return new ResponseEntity<>(obj, HttpStatus.OK); 
@@ -58,16 +57,18 @@ public class MedicoController {
     //Método Put para Modificar datos en la tabla de la BD
     @PutMapping(value="/") 
     @ResponseBody
-    public ResponseEntity<Medico> editar(@RequestBody Medico medico){ 
-        Medico obj = medicoService.findById(medico.getId_medico()); 
+    public ResponseEntity<Historiaclinica> editar(@RequestBody Historiaclinica dato){ 
+        Historiaclinica obj = servicio.findById(dato.getId_historia()); 
         if(obj!=null) { //Lo encotró
-            obj.setCedula(medico.getCedula());
-            obj.setNombres(medico.getNombres());
-			obj.setApellidos(medico.getApellidos());
-			obj.setTelefono(medico.getTelefono());
-            obj.setGenero(medico.getGenero());
-			
-            medicoService.save(medico); 
+            obj.setFecha(dato.getFecha());
+            obj.setEdad(dato.getEdad());
+            obj.setOcupacion(dato.getOcupacion());
+            obj.setEstadocivil(dato.getEstadocivil());
+            obj.setMotivocita(dato.getMotivocita());
+            obj.setEnfermedad(dato.getEnfermedad());
+            obj.setAntecedentes(dato.getAntecedentes());
+            obj.setObservaciones(dato.getObservaciones());
+            servicio.save(dato); 
         } 
         else 
         return new ResponseEntity<>(obj, HttpStatus.INTERNAL_SERVER_ERROR); 
@@ -78,18 +79,16 @@ public class MedicoController {
     //Método Put para Modificar datos en la tabla de la BD
     @GetMapping("/list") 
     //@ResponseBody
-    public List<Medico> consultarTodo(){
+    public List<Historiaclinica> consultarTodo(){
         
-        return medicoService.findAll();
+        return servicio.findAll();
           
     }
     
     @GetMapping("/list/{id}") 
     @ResponseBody
-    public Medico consultaPorId(@PathVariable String id){ 
-        return medicoService.findById(id); 
+    public Historiaclinica consultaPorId(@PathVariable Integer id){ 
+        return servicio.findById(id); 
     }
-    
-   
     
 }

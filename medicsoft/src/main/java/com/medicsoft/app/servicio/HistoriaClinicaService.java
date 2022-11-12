@@ -1,38 +1,44 @@
-package com.medicsoft.app.servicio;
+package com.backend.bancog58.Service;
+
+import com.backend.bancog58.Models.HistoriaClinica;
+import com.backend.bancog58.Dao.HistoriaClinicaDao;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired; 
+import org.springframework.stereotype.Service; 
+import org.springframework.transaction.annotation.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import com.medicsoft.app.entidades.HistoriaClinica;
-import com.medicsoft.app.repositorio.HistoriaClinicaRepository;
 
-//anotacion de jpa de un servicio que va a manejar un crud que viene del html de los controladores que son los formularios creados//
 @Service
 public class HistoriaClinicaService {
-	
-	//se agrega la anotacion del repositorio con anotaacion de autowired//
-	@Autowired
-	HistoriaClinicaRepository historiaclinicaRepository;
-	public List<HistoriaClinica> listar(){
-		return (List<HistoriaClinica>)historiaclinicaRepository.findAll();
-	}
-	
-	public HistoriaClinica obtenerPorId(Long id) {
-		return historiaclinicaRepository.findById(id).get();
-	}
-	
-	public void agregar(HistoriaClinica historiaclinica) {
-		historiaclinicaRepository.save(historiaclinica);
-	}
-	
-	public void actualizar(HistoriaClinica historiaclinica) {
-		historiaclinicaRepository.save(historiaclinica);
-	}
-	
-	public void eliminar(Long id) {
-		historiaclinicaRepository.delete(obtenerPorId(id));
-	}
+    @Autowired
+    private HistoriaClinicaDao historiaClinicaDao;
 
+    //Creamos el método para Guardar datos en la Tabla de la BD
+    public HistoriaClinica save(HistoriaClinica historiaClinica) {
+        return historiaClinicaDao.save(historiaClinica);
+    }
+
+
+    //Creamos el método para Eliminar datos en la Tabla de la BD
+    @Transactional(readOnly=false)
+    public void delete(String id) {
+        historiaClinicaDao.deleteById(id);
+    }
+
+
+    //Creamos el método para buscar un solo registro en la Tabla de la BD
+    @Transactional(readOnly=true)
+    public HistoriaClinica findById(String id) {
+        return historiaClinicaDao.findById(id).orElse(null);
+    }
+
+
+    //Creamos el método para buscar todos los registros en la Tabla de la BD
+    @Transactional(readOnly=true)
+    public List<HistoriaClinica> findAll() {
+        return (List<HistoriaClinica>) historiaClinicaDao.findAll();
+    }
+    
 }

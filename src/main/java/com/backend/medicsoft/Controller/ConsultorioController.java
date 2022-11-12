@@ -1,11 +1,12 @@
-package com.backend.bancog58.Controller;
+package com.backend.medicsoft.Controller;
 
-import com.backend.bancog58.Models.Medico;
-//import com.backend.bancog58.Dao.MedicoDao;
-import com.backend.bancog58.Service.MedicoService;
+import com.backend.medicsoft.Models.Consultorio;
+//import com.backend.medicsoft.Dao.ConsultorioDao;
+import com.backend.medicsoft.Service.ConsultorioService;
 
 import java.util.List;
-
+import javax.validation.Valid;
+//import javax.validation.constraints.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,80 +17,66 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-//import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/medico")
-public class MedicoController {
-   //@Autowired
+@RequestMapping("/consultorio")
+public class ConsultorioController {
+
+    //@Autowired
     //private ClienteDao clienteDao; 
     @Autowired
-    private MedicoService medicoService;
+    private ConsultorioService objSrv;
     
     //Método Post para Insertar datos en la tabla de la BD
     @PostMapping(value="/")
     @ResponseBody
-    public ResponseEntity<Medico> agregar(@RequestBody Medico medico){   
-        Medico obj = medicoService.save(medico);
+    public ResponseEntity<Consultorio> agregar(@Valid @RequestBody Consultorio dato){   
+        Consultorio obj = objSrv.save(dato);
         return new ResponseEntity<>(obj, HttpStatus.OK);     
     }
-   
 
     //Método Delete para Eliminar datos en la tabla de la BD
     @DeleteMapping(value="/{id}") 
-    public ResponseEntity<Medico> eliminar(@PathVariable String id){ 
-        
-        Medico obj = medicoService.findById(id); 
+    public ResponseEntity<Consultorio> eliminar(@PathVariable Integer id){ 
+        Consultorio obj = objSrv.findById(id); 
             if(obj!=null) //Encontró al registro
-            medicoService.delete(id);
+            objSrv.delete(id);
             else 
                 return new ResponseEntity<>(obj, HttpStatus.INTERNAL_SERVER_ERROR); 
             return new ResponseEntity<>(obj, HttpStatus.OK); 
- 
     }
-    
 
     //Método Put para Modificar datos en la tabla de la BD
     @PutMapping(value="/") 
     @ResponseBody
-    public ResponseEntity<Medico> editar(@RequestBody Medico medico){ 
-        Medico obj = medicoService.findById(medico.getId_medico()); 
+    public ResponseEntity<Consultorio> editar(@Valid @RequestBody Consultorio dato){ 
+        Consultorio obj = objSrv.findById(dato.getId_consultorio()); 
         if(obj!=null) { //Lo encotró
-            obj.setCedula(medico.getCedula());
-            obj.setNombres(medico.getNombres());
-			obj.setApellidos(medico.getApellidos());
-			obj.setTelefono(medico.getTelefono());
-            obj.setGenero(medico.getGenero());
-			
-            medicoService.save(medico); 
+            obj.setId_consultorio(dato.getId_consultorio());
+            obj.setNombre(dato.getNombre());
+            obj.setId_especialidad(dato.getId_especialidad());
+            objSrv.save(dato); 
         } 
         else 
         return new ResponseEntity<>(obj, HttpStatus.INTERNAL_SERVER_ERROR); 
         return new ResponseEntity<>(obj, HttpStatus.OK); 
     }
-   
 
     //Método Put para Modificar datos en la tabla de la BD
     @GetMapping("/list") 
     //@ResponseBody
-    public List<Medico> consultarTodo(){
-        
-        return medicoService.findAll();
-          
+    public List<Consultorio> consultarTodo(){        
+        return objSrv.findAll();          
     }
-    
+
     @GetMapping("/list/{id}") 
     @ResponseBody
-    public Medico consultaPorId(@PathVariable String id){ 
-        return medicoService.findById(id); 
+    public Consultorio consultaPorId(@PathVariable Integer id){ 
+        return objSrv.findById(id); 
     }
-    
-   
     
 }

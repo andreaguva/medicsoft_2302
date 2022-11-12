@@ -1,0 +1,38 @@
+package com.backend.medicsoft.Service;
+
+import com.backend.medicsoft.Models.Especialidad;
+import com.backend.medicsoft.Dao.EspecialidadDao;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+public class EspecialidadService {
+    
+    @Autowired
+    private EspecialidadDao objDao;
+    
+    //Creamos el método para Guardar datos en la Tabla de la BD
+    public Especialidad save(Especialidad dato){
+        return objDao.save(dato);
+    }
+
+    //Creamos el método para Eliminar datos en la Tabla de la BD
+    @Transactional(readOnly=false)
+    public void delete(Integer id) {
+        objDao.deleteById(id);
+    }
+
+    //Creamos el método para buscar un solo registro en la Tabla de la BD
+    @Transactional(readOnly=true)
+    public Especialidad findById(Integer id) {
+        return objDao.findById(id).orElse(null);
+    }
+
+    //Creamos el método para buscar todos los registros en la Tabla de la BD
+    @Transactional(readOnly=true)
+    public List<Especialidad> findAll() {
+        return (List<Especialidad>) objDao.findAll();
+    }
+}
