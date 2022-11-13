@@ -11,31 +11,34 @@ import org.springframework.transaction.annotation.Transactional;
 public class UsuarioService {
 
     @Autowired
-    private UsuarioDao objDao;
+    private UsuarioDao dao;
     
     //Creamos el método para Guardar datos en la Tabla de la BD
-    public Usuario save(Usuario dato){
-        return objDao.save(dato);
+    public Usuario save(Usuario objeto){
+        return dao.save(objeto);
     }
 
     //Creamos el método para Eliminar datos en la Tabla de la BD
     @Transactional(readOnly=false)
     public void delete(Integer id) {
-        objDao.deleteById(id);
+        dao.deleteById(id);
     }
 
     //Creamos el método para buscar un solo registro en la Tabla de la BD
     @Transactional(readOnly=true)
     public Usuario findById(Integer id) {
-        return objDao.findById(id).orElse(null);
+        return dao.findById(id).orElse(null);
     }
 
     //Creamos el método para buscar todos los registros en la Tabla de la BD
     @Transactional(readOnly=true)
     public List<Usuario> findAll() {
-        return (List<Usuario>) objDao.findAll();
+        return (List<Usuario>) dao.findAll();
     }
 
-    
+    //@Transactional(readOnly=true)
+    //public Usuario login(String usuario, String clave) {
+        //return dao.login(usuario, clave);
+    //}
 
 }

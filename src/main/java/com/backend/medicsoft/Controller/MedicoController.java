@@ -27,24 +27,24 @@ import org.springframework.web.bind.annotation.RestController;
 public class MedicoController {
 
     //@Autowired
-    //private ClienteDao clienteDao; 
+    //private MedicoDao dao; 
     @Autowired
-    private MedicoService objSrv;
+    private MedicoService servicio;
     
     //Método Post para Insertar datos en la tabla de la BD
     @PostMapping(value="/")
     @ResponseBody
     public ResponseEntity<Medico> agregar(@Valid @RequestBody Medico dato){   
-        Medico obj = objSrv.save(dato);
+        Medico obj = servicio.save(dato);
         return new ResponseEntity<>(obj, HttpStatus.OK);     
     }
 
     //Método Delete para Eliminar datos en la tabla de la BD
     @DeleteMapping(value="/{id}") 
     public ResponseEntity<Medico> eliminar(@PathVariable Integer id){ 
-        Medico obj = objSrv.findById(id); 
+        Medico obj = servicio.findById(id); 
             if(obj!=null) //Encontró al registro
-            objSrv.delete(id);
+            servicio.delete(id);
             else 
                 return new ResponseEntity<>(obj, HttpStatus.INTERNAL_SERVER_ERROR); 
             return new ResponseEntity<>(obj, HttpStatus.OK); 
@@ -54,13 +54,13 @@ public class MedicoController {
     @PutMapping(value="/") 
     @ResponseBody
     public ResponseEntity<Medico> editar(@Valid @RequestBody Medico dato){ 
-        Medico obj = objSrv.findById(dato.getId_medico()); 
+        Medico obj = servicio.findById(dato.getId_medico()); 
         if(obj!=null) { //Lo encotró
             obj.setId_usuario(dato.getId_usuario());
             obj.setId_consultorio(dato.getId_consultorio());
             obj.setId_especialidad(dato.getId_especialidad());
             obj.setRegistro(dato.getRegistro());
-            objSrv.save(dato); 
+            servicio.save(dato); 
         } 
         else 
         return new ResponseEntity<>(obj, HttpStatus.INTERNAL_SERVER_ERROR); 
@@ -71,13 +71,13 @@ public class MedicoController {
     @GetMapping("/list") 
     //@ResponseBody
     public List<Medico> consultarTodo(){        
-        return objSrv.findAll();          
+        return servicio.findAll();          
     }
 
     @GetMapping("/list/{id}") 
     @ResponseBody
     public Medico consultaPorId(@PathVariable Integer id){ 
-        return objSrv.findById(id); 
+        return servicio.findById(id); 
     }
     
 }

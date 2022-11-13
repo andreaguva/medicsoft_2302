@@ -11,28 +11,28 @@ import org.springframework.transaction.annotation.Transactional;
 public class EspecialidadService {
     
     @Autowired
-    private EspecialidadDao objDao;
+    private EspecialidadDao dao;
     
     //Creamos el método para Guardar datos en la Tabla de la BD
-    public Especialidad save(Especialidad dato){
-        return objDao.save(dato);
+    public Especialidad save(Especialidad objeto){
+        return dao.save(objeto);
     }
 
     //Creamos el método para Eliminar datos en la Tabla de la BD
     @Transactional(readOnly=false)
     public void delete(Integer id) {
-        objDao.deleteById(id);
+        dao.deleteById(id);
     }
 
     //Creamos el método para buscar un solo registro en la Tabla de la BD
     @Transactional(readOnly=true)
     public Especialidad findById(Integer id) {
-        return objDao.findById(id).orElse(null);
+        return dao.findById(id).orElse(null);
     }
 
     //Creamos el método para buscar todos los registros en la Tabla de la BD
     @Transactional(readOnly=true)
     public List<Especialidad> findAll() {
-        return (List<Especialidad>) objDao.findAll();
+        return (List<Especialidad>) dao.findAll();
     }
 }

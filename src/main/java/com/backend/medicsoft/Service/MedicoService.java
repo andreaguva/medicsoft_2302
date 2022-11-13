@@ -11,29 +11,29 @@ import org.springframework.transaction.annotation.Transactional;
 public class MedicoService {
 
     @Autowired
-    private MedicoDao objDao;
+    private MedicoDao dao;
     
     //Creamos el método para Guardar datos en la Tabla de la BD
-    public Medico save(Medico dato){
-        return objDao.save(dato);
+    public Medico save(Medico objeto){
+        return dao.save(objeto);
     }
 
     //Creamos el método para Eliminar datos en la Tabla de la BD
     @Transactional(readOnly=false)
     public void delete(Integer id) {
-        objDao.deleteById(id);
+        dao.deleteById(id);
     }
 
     //Creamos el método para buscar un solo registro en la Tabla de la BD
     @Transactional(readOnly=true)
     public Medico findById(Integer id) {
-        return objDao.findById(id).orElse(null);
+        return dao.findById(id).orElse(null);
     }
 
     //Creamos el método para buscar todos los registros en la Tabla de la BD
     @Transactional(readOnly=true)
     public List<Medico> findAll() {
-        return (List<Medico>) objDao.findAll();
+        return (List<Medico>) dao.findAll();
     }
     
 }

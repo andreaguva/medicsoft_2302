@@ -27,24 +27,24 @@ import org.springframework.web.bind.annotation.RestController;
 public class CitamedicaController {
 
     //@Autowired
-    //private ClienteDao clienteDao; 
+    //private CitamedicaDao dao; 
     @Autowired
-    private CitamedicaService objSrv;
+    private CitamedicaService servicio;
     
     //Método Post para Insertar datos en la tabla de la BD
     @PostMapping(value="/")
     @ResponseBody
     public ResponseEntity<Citamedica> agregar(@Valid @RequestBody Citamedica dato){   
-        Citamedica obj = objSrv.save(dato);
+        Citamedica obj = servicio.save(dato);
         return new ResponseEntity<>(obj, HttpStatus.OK);     
     }
 
     //Método Delete para Eliminar datos en la tabla de la BD
     @DeleteMapping(value="/{id}") 
     public ResponseEntity<Citamedica> eliminar(@PathVariable Integer id){ 
-        Citamedica obj = objSrv.findById(id); 
+        Citamedica obj = servicio.findById(id); 
             if(obj!=null) //Encontró al registro
-            objSrv.delete(id);
+            servicio.delete(id);
             else 
                 return new ResponseEntity<>(obj, HttpStatus.INTERNAL_SERVER_ERROR); 
             return new ResponseEntity<>(obj, HttpStatus.OK); 
@@ -54,7 +54,7 @@ public class CitamedicaController {
     @PutMapping(value="/") 
     @ResponseBody
     public ResponseEntity<Citamedica> editar(@Valid @RequestBody Citamedica dato){ 
-        Citamedica obj = objSrv.findById(dato.getId_cita()); 
+        Citamedica obj = servicio.findById(dato.getId_cita()); 
         if(obj!=null) { //Lo encotró
             obj.setId_cita(dato.getId_cita());
             obj.setId_especialidad(dato.getId_especialidad());
@@ -64,7 +64,7 @@ public class CitamedicaController {
             obj.setFecha(dato.getFecha());
             obj.setHorainicial(dato.getHorainicial());
             obj.setHorafinal(dato.getHorafinal());
-            objSrv.save(dato); 
+            servicio.save(dato); 
         } 
         else 
         return new ResponseEntity<>(obj, HttpStatus.INTERNAL_SERVER_ERROR); 
@@ -75,13 +75,13 @@ public class CitamedicaController {
     @GetMapping("/list") 
     //@ResponseBody
     public List<Citamedica> consultarTodo(){        
-        return objSrv.findAll();          
+        return servicio.findAll();          
     }
 
     @GetMapping("/list/{id}") 
     @ResponseBody
     public Citamedica consultaPorId(@PathVariable Integer id){ 
-        return objSrv.findById(id); 
+        return servicio.findById(id); 
     }
     
 }

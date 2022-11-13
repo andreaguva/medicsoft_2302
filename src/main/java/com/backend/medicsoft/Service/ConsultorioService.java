@@ -11,29 +11,29 @@ import org.springframework.transaction.annotation.Transactional;
 public class ConsultorioService {
 
     @Autowired
-    private ConsultorioDao objDao;
+    private ConsultorioDao dao;
     
     //Creamos el método para Guardar datos en la Tabla de la BD
-    public Consultorio save(Consultorio dato){
-        return objDao.save(dato);
+    public Consultorio save(Consultorio objeto){
+        return dao.save(objeto);
     }
 
     //Creamos el método para Eliminar datos en la Tabla de la BD
     @Transactional(readOnly=false)
     public void delete(Integer id) {
-        objDao.deleteById(id);
+        dao.deleteById(id);
     }
 
     //Creamos el método para buscar un solo registro en la Tabla de la BD
     @Transactional(readOnly=true)
     public Consultorio findById(Integer id) {
-        return objDao.findById(id).orElse(null);
+        return dao.findById(id).orElse(null);
     }
 
     //Creamos el método para buscar todos los registros en la Tabla de la BD
     @Transactional(readOnly=true)
     public List<Consultorio> findAll() {
-        return (List<Consultorio>) objDao.findAll();
+        return (List<Consultorio>) dao.findAll();
     }
     
 }

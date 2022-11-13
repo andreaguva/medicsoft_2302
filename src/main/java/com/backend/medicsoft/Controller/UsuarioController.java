@@ -1,12 +1,13 @@
 package com.backend.medicsoft.Controller;
 
 import com.backend.medicsoft.Models.Usuario;
+import com.backend.medicsoft.Segurity.Hash;
 //import com.backend.medicsoft.Dao.UsuarioDao;
 import com.backend.medicsoft.Service.UsuarioService;
 
 import java.util.List;
-import javax.validation.Valid;
-import javax.validation.constraints.Null;
+//import javax.validation.Valid;
+//import javax.validation.constraints.Null;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,11 +19,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-
 
 @RestController
 @CrossOrigin("*")
@@ -30,25 +31,26 @@ import org.springframework.web.bind.annotation.RestController;
 public class UsuarioController {
 
     //@Autowired
-    //private ClienteDao clienteDao; 
+    //private UsuarioDao dao; 
     @Autowired
-    private UsuarioService objSrv;
+    private UsuarioService servicio;
     
     //Método Post para Insertar datos en la tabla de la BD
     @PostMapping(value="/")
     @ResponseBody
-    public ResponseEntity<Usuario> agregar(@Valid @RequestBody Usuario dato){   
-        Usuario obj = objSrv.save(dato);
-        return new ResponseEntity<>(obj, HttpStatus.OK);    
-        //return new ResponseEntity<>(dato, HttpStatus.OK);    
+    public ResponseEntity<Usuario> agregar(@RequestBody Usuario dato){ 
+        //dato.setClave(Hash.sha1(dato.getClave()));
+        Usuario obj = servicio.save(dato);
+        return new ResponseEntity<>(obj, HttpStatus.OK);      
     }
-
+    
+    
     //Método Delete para Eliminar datos en la tabla de la BD
     @DeleteMapping(value="/{id}") 
     public ResponseEntity<Usuario> eliminar(@PathVariable Integer id){ 
-        Usuario obj = objSrv.findById(id); 
+        Usuario obj = servicio.findById(id); 
             if(obj!=null) //Encontró al registro
-            objSrv.delete(id);
+            servicio.delete(id);
             else 
                 return new ResponseEntity<>(obj, HttpStatus.INTERNAL_SERVER_ERROR); 
             return new ResponseEntity<>(obj, HttpStatus.OK); 
@@ -57,8 +59,9 @@ public class UsuarioController {
     //Método Put para Modificar datos en la tabla de la BD
     @PutMapping(value="/") 
     @ResponseBody
-    public ResponseEntity<Usuario> editar(@Valid @RequestBody Usuario dato){ 
-        Usuario obj = objSrv.findById(dato.getId_usuario()); 
+    public ResponseEntity<Usuario> editar(@RequestBody Usuario dato){ 
+        dato.setClave(Hash.sha1(dato.getClave()));
+        Usuario obj = servicio.findById(dato.getId_usuario()); 
         if(obj!=null) { //Lo encotró
             obj.setCedula(dato.getCedula());
             obj.setNombres(dato.getNombres());
@@ -67,23 +70,38 @@ public class UsuarioController {
             obj.setGenero(dato.getGenero());
             obj.setClave(dato.getClave());
             obj.setRol(dato.getRol());
-            objSrv.save(dato); 
+            servicio.save(dato); 
         } 
         else 
         return new ResponseEntity<>(obj, HttpStatus.INTERNAL_SERVER_ERROR); 
         return new ResponseEntity<>(obj, HttpStatus.OK); 
     }
-
-    //Método Put para Modificar datos en la tabla de la BD
+    
+    //Método Put para Consultar datos en la tabla de la BD
     @GetMapping("/list") 
     //@ResponseBody
-    public List<Usuario> consultarTodo(){        
-        return objSrv.findAll();          
+    public List<Usuario> consultarTodo(){   
+        return servicio.findAll();
+        //@RequestHeader("clave")String clave,@RequestHeader("usuario")String usuario;     
+        //Usuario obj= new Usuario();
+        //obj=dao.login(usuario, Hash.sha1(clave));
+        //if (obj!=null) {            
+            //return new ResponseEntity<>(servicio.findAll(),HttpStatus.OK);
+        //} else {
+           // return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        //}          
     }
 
     @GetMapping("/list/{id}") 
     @ResponseBody
     public Usuario consultaPorId(@PathVariable Integer id){ 
-        return objSrv.findById(id); 
+        return servicio.findById(id); 
     }
+
+    /*@GetMapping("/login")
+    @ResponseBody
+    public Usuario ingresar(@RequestParam ("usuario") String usuario,@RequestParam ("clave") String clave) {
+        clave=Hash.sha1(clave);
+        return servicio.login(usuario, clave); 
+    }*/
 }

@@ -11,29 +11,29 @@ import org.springframework.transaction.annotation.Transactional;
 public class CitamedicaService {
 
     @Autowired
-    private CitamedicaDao objDao;
+    private CitamedicaDao dao;
     
     //Creamos el método para Guardar datos en la Tabla de la BD
-    public Citamedica save(Citamedica dato){
-        return objDao.save(dato);
+    public Citamedica save(Citamedica objeto){
+        return dao.save(objeto);
     }
 
     //Creamos el método para Eliminar datos en la Tabla de la BD
     @Transactional(readOnly=false)
     public void delete(Integer id) {
-        objDao.deleteById(id);
+        dao.deleteById(id);
     }
 
     //Creamos el método para buscar un solo registro en la Tabla de la BD
     @Transactional(readOnly=true)
     public Citamedica findById(Integer id) {
-        return objDao.findById(id).orElse(null);
+        return dao.findById(id).orElse(null);
     }
 
     //Creamos el método para buscar todos los registros en la Tabla de la BD
     @Transactional(readOnly=true)
     public List<Citamedica> findAll() {
-        return (List<Citamedica>) objDao.findAll();
+        return (List<Citamedica>) dao.findAll();
     }
     
 }
