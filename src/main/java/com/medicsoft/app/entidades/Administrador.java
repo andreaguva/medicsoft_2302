@@ -15,7 +15,7 @@ public class Administrador {
 	
 	private long id_administrador;
 
-	private String apellidossss;
+	private String apellidos;
 	private String nombres;
 	private String tipodocumento;
 	private long documento;
