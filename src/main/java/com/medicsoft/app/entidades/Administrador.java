@@ -14,7 +14,8 @@ public class Administrador {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	
 	private long id_administrador;
-	private String apellidos;
+
+	private String apellidossss;
 	private String nombres;
 	private String tipodocumento;
 	private long documento;
