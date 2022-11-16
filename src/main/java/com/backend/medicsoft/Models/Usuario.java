@@ -8,8 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 // Para validar errores
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+//import javax.validation.constraints.NotEmpty;
+//import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,30 +22,30 @@ public class Usuario implements Serializable{
     //Campos de la tabla en la BD    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotEmpty(message = "El campo id_usuario no debe ser vacío")
-    @Size(min = 2, max = 6,message = "El campo id_usuario debe tener mínimo 2 caracteres y máximo 6")
+    //@NotEmpty(message = "El campo id_usuario no debe ser vacío")
+    //@Size(min = 2, max = 6,message = "El campo id_usuario debe tener mínimo 2 caracteres y máximo 6")
     @Column(name="id_usuario")
     private int id_usuario;
-    @NotEmpty(message = "El campo cedula no debe ser vacío")
+    //@NotEmpty(message = "El campo cedula no debe ser vacío")
     @Column(name="cedula")
     private String cedula;
-    @NotEmpty(message = "El campo nombres cliente no debe ser vacío")
+    //@NotEmpty(message = "El campo nombres cliente no debe ser vacío")
     @Column(name="nombres")
     private String nombres;
-    @NotEmpty(message = "El campo apellidos no debe ser vacío")
+    //@NotEmpty(message = "El campo apellidos no debe ser vacío")
     @Column(name="apellidos")
     private String apellidos;
-    @NotEmpty(message = "El campo telefono no debe ser vacío")
+    //@NotEmpty(message = "El campo telefono no debe ser vacío")
     @Column(name="telefono")
     private String telefono;
-    @NotEmpty(message = "El campo genero no debe ser vacío")
+    //@NotEmpty(message = "El campo genero no debe ser vacío")
     @Column(name="genero")
     private String genero;
-    @NotEmpty(message = "El campo nombres cliente no debe ser vacío")
-    @Size(min = 5, max = 10,message = "El campo clave debe tener mínimo 5 caracteres y máximo 10")
+    //@NotEmpty(message = "El campo nombres cliente no debe ser vacío")
+    //@Size(min = 5, max = 10,message = "El campo clave debe tener mínimo 5 caracteres y máximo 10")
     @Column(name="clave")
     private String clave;
-    @NotEmpty(message = "El campo rol no debe ser vacío")
+    //@NotEmpty(message = "El campo rol no debe ser vacío")
     @Column(name="rol")
     private String rol;
     @Override

@@ -10,6 +10,6 @@ public interface UsuarioDao extends CrudRepository <Usuario,Integer>{
     //Operación de Autentiiicación (SELECT)
     //@Transactional(readOnly=true)//No afecta integridad base de datos
     //@Query(value="SELECT * FROM cliente WHERE id_usuario= :usuario AND clave = :clave", nativeQuery=true)
-    //public Usuario login(@Param("usuario") String usuario, @Param("clave") String clave);    
+    //public List<Usuario>consulta_usuario(@Param("usuario") String usuario, @Param("clave") String clave);    
 
 }

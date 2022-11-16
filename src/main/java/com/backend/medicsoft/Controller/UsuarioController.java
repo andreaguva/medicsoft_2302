@@ -1,7 +1,7 @@
 package com.backend.medicsoft.Controller;
 
 import com.backend.medicsoft.Models.Usuario;
-import com.backend.medicsoft.Segurity.Hash;
+//import com.backend.medicsoft.Segurity.Hash;
 //import com.backend.medicsoft.Dao.UsuarioDao;
 import com.backend.medicsoft.Service.UsuarioService;
 
@@ -60,9 +60,10 @@ public class UsuarioController {
     @PutMapping(value="/") 
     @ResponseBody
     public ResponseEntity<Usuario> editar(@RequestBody Usuario dato){ 
-        dato.setClave(Hash.sha1(dato.getClave()));
+        //dato.setClave(Hash.sha1(dato.getClave()));
         Usuario obj = servicio.findById(dato.getId_usuario()); 
         if(obj!=null) { //Lo encotró
+            obj.setId_usuario(dato.getId_usuario());
             obj.setCedula(dato.getCedula());
             obj.setNombres(dato.getNombres());
             obj.setApellidos(dato.getApellidos());
