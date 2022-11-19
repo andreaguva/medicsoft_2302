@@ -1,12 +1,12 @@
 package com.backend.medicsoft.Controller;
 
 import com.backend.medicsoft.Models.Usuario;
-import com.backend.medicsoft.Segurity.Hash;
+//import com.backend.medicsoft.Segurity.Hash;
 //import com.backend.medicsoft.Dao.UsuarioDao;
 import com.backend.medicsoft.Service.UsuarioService;
 
 import java.util.List;
-//import javax.validation.Valid;
+import javax.validation.Valid;
 //import javax.validation.constraints.Null;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +38,11 @@ public class UsuarioController {
     //Método Post para Insertar datos en la tabla de la BD
     @PostMapping(value="/")
     @ResponseBody
-    public ResponseEntity<Usuario> agregar(@RequestBody Usuario dato){ 
+    public ResponseEntity<Usuario> agregar(@Valid @RequestBody Usuario dato){ 
         //dato.setClave(Hash.sha1(dato.getClave()));
         Usuario obj = servicio.save(dato);
         return new ResponseEntity<>(obj, HttpStatus.OK);      
     }
-    
     
     //Método Delete para Eliminar datos en la tabla de la BD
     @DeleteMapping(value="/{id}") 
@@ -59,8 +58,8 @@ public class UsuarioController {
     //Método Put para Modificar datos en la tabla de la BD
     @PutMapping(value="/") 
     @ResponseBody
-    public ResponseEntity<Usuario> editar(@RequestBody Usuario dato){ 
-        dato.setClave(Hash.sha1(dato.getClave()));
+    public ResponseEntity<Usuario> editar(@Valid @RequestBody Usuario dato){ 
+        //dato.setClave(Hash.sha1(dato.getClave()));
         Usuario obj = servicio.findById(dato.getId_usuario()); 
         if(obj!=null) { //Lo encotró
             obj.setCedula(dato.getCedula());
@@ -82,14 +81,14 @@ public class UsuarioController {
     //@ResponseBody
     public List<Usuario> consultarTodo(){   
         return servicio.findAll();
-        //@RequestHeader("clave")String clave,@RequestHeader("usuario")String usuario;     
-        //Usuario obj= new Usuario();
-        //obj=dao.login(usuario, Hash.sha1(clave));
-        //if (obj!=null) {            
+        /*@RequestHeader("clave")String clave,@RequestHeader("usuario")String usuario;     
+        Usuario obj= new Usuario();
+        obj=dao.login(usuario, Hash.sha1(clave));
+        if (obj!=null) {            
             //return new ResponseEntity<>(servicio.findAll(),HttpStatus.OK);
-        //} else {
+        } else {
            // return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        //}          
+        } */         
     }
 
     @GetMapping("/list/{id}") 

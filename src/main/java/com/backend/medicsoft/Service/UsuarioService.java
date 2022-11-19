@@ -36,9 +36,9 @@ public class UsuarioService {
         return (List<Usuario>) dao.findAll();
     }
 
-    //@Transactional(readOnly=true)
-    //public Usuario login(String usuario, String clave) {
-        //return dao.login(usuario, clave);
-    //}
+    /*@Transactional(readOnly=true)
+    public Usuario login(String usuario, String clave) {
+        return dao.login(usuario, clave);
+    }*/
 
 }

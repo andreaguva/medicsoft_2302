@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 // Para validar errores
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+//import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,10 +20,9 @@ import lombok.Setter;
 public class Consultorio implements Serializable{
 
     @Id
-    @NotEmpty(message = "El campo id_consultorio no debe ser vacío")
-    @Size(min = 2, max = 6,message = "El campo id_consultorio debe tener mínimo 2 caracteres y máximo 6")
     @Column(name="id_consultorio")
     private int id_consultorio;
+    @NotEmpty(message = "El campo nombre no debe ser vacío")
     @Column(name="nombre")
     private String nombre;
     @ManyToOne
@@ -35,5 +34,4 @@ public class Consultorio implements Serializable{
                 + id_especialidad + "]";
     }
     
- 
 }

@@ -7,6 +7,7 @@ import com.backend.medicsoft.Service.EspecialidadService;
 import java.util.List;
 import javax.validation.Valid;
 //import javax.validation.constraints.Null;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -56,7 +59,7 @@ public class EspecialidadController {
     public ResponseEntity<Especialidad> editar(@Valid @RequestBody Especialidad dato){ 
         Especialidad obj = servicio.findById(dato.getId_especialidad()); 
         if(obj!=null) { //Lo encotró
-            obj.setId_especialidad(dato.getId_especialidad());
+            //obj.setId_especialidad(dato.getId_especialidad());
             obj.setNombre(dato.getNombre());
             servicio.save(dato); 
         } 

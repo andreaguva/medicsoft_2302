@@ -3,8 +3,6 @@ package com.backend.medicsoft.Models;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 // Para validar errores
@@ -20,13 +18,11 @@ import lombok.Setter;
 public class Usuario implements Serializable{
     //Creamos los atributos de la clase de acuerdo a los
     //Campos de la tabla en la BD    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotEmpty(message = "El campo id_usuario no debe ser vacío")
-    @Size(min = 2, max = 6,message = "El campo id_usuario debe tener mínimo 2 caracteres y máximo 6")
+    @Id      
     @Column(name="id_usuario")
     private int id_usuario;
     @NotEmpty(message = "El campo cedula no debe ser vacío")
+    @Size(min = 8, max = 10,message = "El campo id_usuario debe tener mínimo 2 caracteres y máximo 6")
     @Column(name="cedula")
     private String cedula;
     @NotEmpty(message = "El campo nombres cliente no debe ser vacío")
@@ -55,5 +51,4 @@ public class Usuario implements Serializable{
                 + "]";
     }
     
-   
 }
