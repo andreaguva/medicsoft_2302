@@ -8,4 +8,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface CitamedicaDao extends CrudRepository <Citamedica,Integer>{
     
+    
 }

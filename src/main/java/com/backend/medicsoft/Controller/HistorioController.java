@@ -1,8 +1,8 @@
 package com.backend.medicsoft.Controller;
 
-import com.backend.medicsoft.Models.Consultorio;
-//import com.backend.medicsoft.Dao.ConsultorioDao;
-import com.backend.medicsoft.Service.ConsultorioService;
+import com.backend.medicsoft.Models.Historia;
+//import com.backend.medicsoft.Dao.HistoriaDao;
+import com.backend.medicsoft.Service.HistorioService;
 
 import java.util.List;
 import javax.validation.Valid;
@@ -26,26 +26,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/consultorio")
-public class ConsultorioController {
+@RequestMapping("/historia")
+public class HistorioController {
 
-    //@Autowired
-    //private ConsultorioDao dao; 
     @Autowired
-    private ConsultorioService servicio;
+    private HistorioService servicio;
     
     //Método Post para Insertar datos en la tabla de la BD
     @PostMapping(value="/")
     @ResponseBody
-    public ResponseEntity<Consultorio> agregar(@Valid @RequestBody Consultorio dato){   
-        Consultorio obj = servicio.save(dato);
+    public ResponseEntity<Historia> agregar(@Valid @RequestBody Historia dato){   
+        Historia obj = servicio.save(dato);
         return new ResponseEntity<>(obj, HttpStatus.OK);     
     }
 
     //Método Delete para Eliminar datos en la tabla de la BD
     @DeleteMapping(value="/{id}") 
-    public ResponseEntity<Consultorio> eliminar(@PathVariable Integer id){ 
-        Consultorio obj = servicio.findById(id); 
+    public ResponseEntity<Historia> eliminar(@PathVariable Integer id){ 
+        Historia obj = servicio.findById(id); 
             if(obj!=null) //Encontró al registro
             servicio.delete(id);
             else 
@@ -56,11 +54,15 @@ public class ConsultorioController {
     //Método Put para Modificar datos en la tabla de la BD
     @PutMapping(value="/") 
     @ResponseBody
-    public ResponseEntity<Consultorio> editar(@Valid @RequestBody Consultorio dato){ 
-        Consultorio obj = servicio.findById(dato.getId_consultorio()); 
+    public ResponseEntity<Historia> editar(@Valid @RequestBody Historia dato){ 
+        Historia obj = servicio.findById(dato.getId_historia()); 
         if(obj!=null) { //Lo encotró
-            //obj.setId_consultorio(dato.getId_consultorio());
-            obj.setNom_consultorio(dato.getNom_consultorio());            
+            //obj.setId_historia(dato.getId_historia());
+            //obj.setId_cita(dato.getId_cita());
+            obj.setMotivocita(dato.getMotivocita());
+            obj.setEnfermedad(dato.getEnfermedad());
+            obj.setAntecedentes(dato.getAntecedentes());
+            obj.setObservaciones(dato.getObservaciones());           
             servicio.save(dato); 
         } 
         else 
@@ -71,13 +73,13 @@ public class ConsultorioController {
     //Método Put para Modificar datos en la tabla de la BD
     @GetMapping("/list") 
     //@ResponseBody
-    public List<Consultorio> consultarTodo(){        
+    public List<Historia> consultarTodo(){        
         return servicio.findAll();          
     }
 
     @GetMapping("/list/{id}") 
     @ResponseBody
-    public Consultorio consultaPorId(@PathVariable Integer id){ 
+    public Historia consultaPorId(@PathVariable Integer id){ 
         return servicio.findById(id); 
     }
     

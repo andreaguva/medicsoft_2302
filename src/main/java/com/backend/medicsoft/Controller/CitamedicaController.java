@@ -56,12 +56,11 @@ public class CitamedicaController {
     public ResponseEntity<Citamedica> editar(@Valid @RequestBody Citamedica dato){ 
         Citamedica obj = servicio.findById(dato.getId_cita()); 
         if(obj!=null) { //Lo encotró
-            obj.setId_cita(dato.getId_cita());
-            obj.setId_especialidad(dato.getId_especialidad());
+            //obj.setId_cita(dato.getId_cita());           
             obj.setId_medico(dato.getId_medico());
-            obj.setId_consultorio(dato.getId_consultorio());
             obj.setId_paciente(dato.getId_paciente());
-            obj.setFecha(dato.getFecha());
+            obj.setId_consultorio(dato.getId_consultorio());            
+            obj.setFecha_cita(dato.getFecha_cita());
             obj.setHorainicial(dato.getHorainicial());
             obj.setHorafinal(dato.getHorafinal());
             servicio.save(dato); 

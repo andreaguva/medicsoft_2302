@@ -1,21 +1,20 @@
 package com.backend.medicsoft.Service;
 
-import com.backend.medicsoft.Models.Paciente;
-import com.backend.medicsoft.Dao.PacienteDao;
-
+import com.backend.medicsoft.Models.Historia;
+import com.backend.medicsoft.Dao.HistoriaDao;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class PacienteService {
-
+public class HistorioService {
+    
     @Autowired
-    private PacienteDao dao;
+    private HistoriaDao dao;
     
     //Creamos el método para Guardar datos en la Tabla de la BD
-    public Paciente save(Paciente objeto){
+    public Historia save(Historia objeto){
         return dao.save(objeto);
     }
 
@@ -27,23 +26,13 @@ public class PacienteService {
 
     //Creamos el método para buscar un solo registro en la Tabla de la BD
     @Transactional(readOnly=true)
-    public Paciente findById(Integer id) {
+    public Historia findById(Integer id) {
         return dao.findById(id).orElse(null);
     }
 
     //Creamos el método para buscar todos los registros en la Tabla de la BD
     @Transactional(readOnly=true)
-    public List<Paciente> findAll() {
-        return (List<Paciente>) dao.findAll();
+    public List<Historia> findAll() {
+        return (List<Historia>) dao.findAll();
     }
-
-    //Creamos el método para validar login la Tabla de la BD
-    /*@Transactional(readOnly=true)
-    public Paciente login(String documento, String clave, String rol) {
-        return dao.login(documento, clave, rol);
-    
-    }*/
-
 }
-    
-

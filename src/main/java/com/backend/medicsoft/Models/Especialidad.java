@@ -21,12 +21,13 @@ public class Especialidad implements Serializable {
     @Column(name="id_especialidad")
     private int id_especialidad;
     @NotEmpty(message = "El campo id_especialidad no debe ser vacío")
-    @Column(name="nombre")
-    private String nombre;
+    @Column(name="nom_especialidad")
+    private String nom_especialidad;
     @Override
     public String toString() {
-        return "Especialidad [id_especialidad=" + id_especialidad + ", nombre=" + nombre + "]";
+        return "Especialidad [id_especialidad=" + id_especialidad + ", nom_especialidad=" + nom_especialidad + "]";
     }
+    
     
     
 }

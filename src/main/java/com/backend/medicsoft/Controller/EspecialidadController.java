@@ -60,7 +60,7 @@ public class EspecialidadController {
         Especialidad obj = servicio.findById(dato.getId_especialidad()); 
         if(obj!=null) { //Lo encotró
             //obj.setId_especialidad(dato.getId_especialidad());
-            obj.setNombre(dato.getNombre());
+            obj.setNom_especialidad(dato.getNom_especialidad());;
             servicio.save(dato); 
         } 
         else 

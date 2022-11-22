@@ -4,8 +4,6 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 // Para validar errores
 import javax.validation.constraints.NotEmpty;
@@ -23,15 +21,12 @@ public class Consultorio implements Serializable{
     @Column(name="id_consultorio")
     private int id_consultorio;
     @NotEmpty(message = "El campo nombre no debe ser vacío")
-    @Column(name="nombre")
-    private String nombre;
-    @ManyToOne
-    @JoinColumn(name="id_especialidad")//Solo para las llaves foráneas
-    private Especialidad id_especialidad; //De esta forma se representa la llave foránea, es decir, creando un objeto de la clase
+    @Column(name="nom_consultorio")
+    private String nom_consultorio;
     @Override
     public String toString() {
-        return "Consultorio [id_consultorio=" + id_consultorio + ", nombre=" + nombre + ", id_especialidad="
-                + id_especialidad + "]";
+        return "Consultorio [id_consultorio=" + id_consultorio + ", nom_consultorio=" + nom_consultorio + "]";
     }
+    
     
 }

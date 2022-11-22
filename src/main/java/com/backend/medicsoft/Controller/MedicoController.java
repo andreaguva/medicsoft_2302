@@ -56,10 +56,15 @@ public class MedicoController {
     public ResponseEntity<Medico> editar(@Valid @RequestBody Medico dato){ 
         Medico obj = servicio.findById(dato.getId_medico()); 
         if(obj!=null) { //Lo encotró
-            obj.setId_usuario(dato.getId_usuario());
-            obj.setId_consultorio(dato.getId_consultorio());
-            obj.setId_especialidad(dato.getId_especialidad());
-            obj.setRegistro(dato.getRegistro());
+            //obj.setId_medico(dato.getId_medico());
+            obj.setClave_medico(dato.getClave_medico());
+            obj.setRol(dato.getRol());
+            obj.setRegistro_medico(dato.getRegistro_medico());
+            obj.setNombre_medico(dato.getNombre_medico());
+            obj.setApellido_medico(dato.getApellido_medico());
+            obj.setTel_medico(dato.getTel_medico());
+            obj.setEmail_medico(dato.getEmail_medico());
+            //obj.setId_especialidad(dato.getId_especialidad());
             servicio.save(dato); 
         } 
         else 
