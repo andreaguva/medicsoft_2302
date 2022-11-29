@@ -1,0 +1,157 @@
+drop database medicsoft4;
+drop table administrador;
+drop view historia_clinica;
+CREATE DATABASE medicsoft4;
+USE medicsoft4;
+
+CREATE TABLE administrador( id_administrador INT AUTO_INCREMENT,
+                           documento_administrador VARCHAR(15) NOT NULL,
+                           clave_administrador VARCHAR(150) NOT NULL,
+                           rol VARCHAR(1) NOT NULL,
+                           PRIMARY KEY(id_administrador));
+CREATE TABLE especialidad( id_especialidad INT AUTO_INCREMENT,
+                           nom_especialidad VARCHAR(30) NOT NULL,
+                           PRIMARY KEY(id_especialidad));
+                           
+CREATE TABLE consultorio( id_consultorio INT AUTO_INCREMENT,
+                          nom_consultorio VARCHAR(30) NOT NULL,
+                          PRIMARY KEY(id_consultorio));
+                      
+CREATE TABLE paciente( id_paciente INT AUTO_INCREMENT,
+                       clave_paciente VARCHAR(150) NOT NULL,
+                       rol VARCHAR(1) NOT NULL,
+                       documento_paciente VARCHAR(15) NOT NULL,
+					   nombre_paciente VARCHAR(30) NOT NULL,
+                       apellido_paciente VARCHAR(30) NOT NULL,
+                       tel_paciente VARCHAR(30) NOT NULL,
+                       email_paciente VARCHAR(30) NOT NULL,
+                       fnacim_paciente DATE NOT NULL,
+                       genero_paciente VARCHAR(30) NOT NULL,
+                       ocupacion VARCHAR(30) NOT NULL,
+                       estado_civil VARCHAR(30) NOT NULL,
+                       PRIMARY KEY(id_paciente));
+                       
+CREATE TABLE medico( id_medico INT AUTO_INCREMENT,
+                     clave_medico VARCHAR(150) NOT NULL,
+                     rol VARCHAR(1) NOT NULL, 
+                     registro_medico VARCHAR (15) NOT NULL,
+                     nombre_medico VARCHAR(30) NOT NULL,
+                     apellido_medico VARCHAR(30) NOT NULL,
+                     tel_medico VARCHAR(30) NOT NULL,
+                     email_medico VARCHAR(30) NOT NULL,
+                     id_especialidad INT NOT NULL,
+                     PRIMARY KEY(id_medico),
+                     FOREIGN KEY(id_especialidad) references especialidad(id_especialidad));
+            
+CREATE TABLE hora_atencion(id_horaatencion INT AUTO_INCREMENT,
+                         id_medico INT NOT NULL,                         
+                         id_consultorio INT NOT NULL,
+                         fecha_cita DATE  NOT NULL,
+                         horainicial TIME NOT NULL,
+                         horafinal TIME NOT NULL,
+						 PRIMARY KEY(id_horaatencion),
+                         FOREIGN KEY(id_medico) references medico(id_medico),                        
+                         FOREIGN KEY(id_consultorio) references consultorio(id_consultorio));
+                         
+CREATE TABLE cita_paciente( id_citapaciente INT AUTO_INCREMENT,
+						   id_horaatencion INT NOT NULL,
+                           id_paciente INT NOT NULL,
+                           PRIMARY KEY(id_citapaciente),
+                           FOREIGN KEY(id_horaatencion) references hora_atencion(id_horaatencion),                        
+						   FOREIGN KEY(id_paciente) references paciente(id_paciente));                       
+                                                  
+CREATE TABLE historia( id_historia INT AUTO_INCREMENT,
+                       id_citapaciente INT NOT NULL, 
+                       motivocita VARCHAR (200) DEFAULT NULL,
+                       enfermedad VARCHAR (200) DEFAULT NULL,
+                       antecedentes VARCHAR (200) DEFAULT NULL,
+                       observaciones VARCHAR (200) DEFAULT NULL,
+                       PRIMARY KEY(id_historia),
+                       FOREIGN KEY(id_citapaciente) references cita_paciente(id_citapaciente));
+                       
+create view personas as select a.* from 
+(select documento_paciente as documento, clave_paciente as clave, rol from paciente 
+union all select registro_medico as documento, clave_medico as clave, rol from medico 
+union all select documento_administrador as documento, clave_administrador as clave, rol from administrador )a;                       
+
+create view historia_clinica as select a.* from(select 
+a.id_citapaciente as id_cita,
+b.nombre_paciente as nom_paciente,
+b.documento_paciente as doc_paciente,
+c.fecha_cita as fecha_de_cita, 
+c.horainicial as hora_cita,
+e.nom_consultorio as consultorio,
+d.nombre_medico as nom_medico,
+f.nom_especialidad as especialidad,
+g.motivocita as motivo_consulta,
+g.enfermedad as diagnostico,
+g.antecedentes,
+g.observaciones as  recomendaciones
+from cita_paciente a, paciente b, hora_atencion c, medico d, consultorio e, especialidad f, historia g
+where a.id_paciente = b.id_paciente and a.id_horaatencion=c.id_horaatencion and d.id_medico=c.id_medico 
+and e.id_consultorio=c.id_consultorio and f.id_especialidad=d.id_especialidad and a.id_citapaciente = g.id_citapaciente)a;
+
+insert into consultorio values(1,'General 1');
+insert into consultorio values(2,'Pedriatria');
+
+insert into especialidad values(1,'Medicina General');
+insert into especialidad values(2,'Pedriatria');
+
+insert into administrador(id_administrador,documento_administrador,clave_administrador,rol) values(1,'88333221','47abeb068301ef134f475163ea6aaa76bc419b28',1);
+
+insert into paciente
+(id_paciente,clave_paciente,rol,documento_paciente,nombre_paciente,apellido_paciente,tel_paciente,email_paciente,fnacim_paciente,genero_paciente,ocupacion,estado_civil) 
+values(1,'7c4a8d09ca3762af61e59520943dc26494f8941b','3','88333221','Ivan','Bermon','3215554433','abc@deg.com','2022-01-25','masculino','Estudiante','Casado');
+insert into paciente
+(clave_paciente,rol,documento_paciente,nombre_paciente,apellido_paciente,tel_paciente,email_paciente,fnacim_paciente,genero_paciente,ocupacion,estado_civil) 
+values('7c4a8d09ca3762af61e59520943dc26494f8941b','3','1090373555','Monica','Reyes','3124497950','abc@deg.com','1994-06-04','masculino','Ingeniero','Casado');
+
+insert into medico
+(id_medico,clave_medico,rol,registro_medico,nombre_medico,apellido_medico,tel_medico,email_medico,id_especialidad) 
+values(1,'7c4a8d09ca3762af61e59520943dc26494f8941b','2','1092006182','Derek','Bermon','3101112233','abc@deg.com',1);
+
+insert into hora_atencion(id_horaatencion,id_medico,id_consultorio,fecha_cita,horainicial,horafinal) 
+values(1,1,1,'2022-11-28','08:00:00','08:19:00');
+insert into hora_atencion(id_horaatencion,id_medico,id_consultorio,fecha_cita,horainicial,horafinal) 
+values(2,1,1,'2022-11-28','08:20:00','08:39:00');
+
+insert into cita_paciente(id_citapaciente,id_horaatencion,id_paciente) 
+values(1,1,1);
+
+insert into historia(id_historia,id_citapaciente,motivocita,enfermedad,antecedentes,observaciones) 
+values(1,1,'Dolor de pecho y congestíon','Resfriado','El paciente manifiesta que ha presento Neumonia el 2021','Se le recomienda acetaminofen y reposo' );
+
+///////////////////////////////////////////////////////////////
+para metodo GET
+localhost:8080/consultorio/list
+pata metodo POST y PUT
+localhost:8080/consultorio/
+En el POST es necesario el id_consultorio ya que este es autoinclemental
+{
+    "nom_consultorio": "General 1"
+ }
+En el  PUT
+{
+    "id_consultorio": 1,
+    "nom_consultorio": "General 1"
+ }
+pata metodo DELETE
+localhost:8080/consultorio/1
+elimina el consultorio de id_consultorio 1
+
+para metodo GET
+localhost:8080/especialidad/list
+pata metodo POST y PUT
+localhost:8080/especialidad/
+En el POST es necesario el id_especialidad ya que este es autoinclemental
+{
+    "nom_especialidad": "Medicina General"
+ }
+En el  PUT
+{
+    "id_especialidad": 1,
+    "nom_especialidad": "Medicina General"
+  }
+pata metodo DELETE
+localhost:8080/especialidad/1
+elimina la especialidad de id_especialidad 1
