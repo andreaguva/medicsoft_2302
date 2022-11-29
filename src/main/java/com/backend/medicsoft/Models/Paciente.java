@@ -1,6 +1,8 @@
 package com.backend.medicsoft.Models;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -23,7 +25,7 @@ public class Paciente implements Serializable{
     @Column(name="id_paciente")
     private int id_paciente;
     @NotEmpty(message = "El campo clave_paciente no debe ser vacío")
-    @Size(min = 4, max = 10,message = "El campo clave_paciente debe tener mínimo 4 caracteres y máximo 10")    
+    @Size(min = 4, max = 150,message = "El campo clave_paciente debe tener mínimo 4 caracteres y máximo 150")    
     @Column(name="clave_paciente")
     private String clave_paciente;
     @NotEmpty(message = "El campo rol no debe ser vacío")    
@@ -46,7 +48,7 @@ public class Paciente implements Serializable{
     private String email_paciente;
     @NotEmpty(message = "El campo fnacim_paciente no debe ser vacío")      
     @Column(name="fnacim_paciente")
-    private String fnacim_paciente;
+    private Date fnacim_paciente;
     @NotEmpty(message = "El campo genero_paciente no debe ser vacío")      
     @Column(name="genero_paciente")
     private String genero_paciente;
@@ -64,7 +66,5 @@ public class Paciente implements Serializable{
                 + email_paciente + ", fnacim_paciente=" + fnacim_paciente + ", genero_paciente=" + genero_paciente
                 + ", ocupacion=" + ocupacion + ", estado_civil=" + estado_civil + "]";
     }
-    
-    
     
 }

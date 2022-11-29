@@ -23,7 +23,7 @@ public class Medico implements Serializable{
     @Column(name="id_medico")
     private int id_medico;          
     @NotEmpty(message = "El campo clave_medico no debe ser vacío")
-    @Size(min = 4, max = 10,message = "El campo clave_medico debe tener mínimo 4 caracteres y máximo 10")    
+    @Size(min = 4, max = 150,message = "El campo clave_medico debe tener mínimo 4 caracteres y máximo 150")    
     @Column(name="clave_medico")
     private String clave_medico;
     @NotEmpty(message = "El campo rol no debe ser vacío")

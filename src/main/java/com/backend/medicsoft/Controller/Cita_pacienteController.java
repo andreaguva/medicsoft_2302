@@ -1,8 +1,8 @@
 package com.backend.medicsoft.Controller;
 
-import com.backend.medicsoft.Models.Consultorio;
+import com.backend.medicsoft.Models.Cita_paciente;
 //import com.backend.medicsoft.Dao.ConsultorioDao;
-import com.backend.medicsoft.Service.ConsultorioService;
+import com.backend.medicsoft.Service.Cita_pacienteService;
 import com.backend.medicsoft.Models.Personas;
 import com.backend.medicsoft.Dao.PersonasDao;
 //import com.backend.medicsoft.Service.PersonasService;
@@ -32,20 +32,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/consultorio")
-public class ConsultorioController {
+@RequestMapping("/cita_paciente")
+
+public class Cita_pacienteController {
 
     //@Autowired
     //private ConsultorioDao dao; 
     @Autowired
-    private ConsultorioService servicio;
+    private Cita_pacienteService servicio;
     @Autowired
     private PersonasDao dao;
-    
+
     //Método Post para Insertar datos en la tabla de la BD
     @PostMapping(value="/")
     @ResponseBody
-    public ResponseEntity<Consultorio> agregar(@RequestHeader("clave")String clave,@RequestHeader("documento")String documento,@Valid @RequestBody Consultorio dato){   
+    public ResponseEntity<Cita_paciente> agregar(@RequestHeader("clave")String clave,@RequestHeader("documento")String documento,@Valid @RequestBody Cita_paciente dato){   
         Personas obj= new Personas();
         obj=dao.login(documento, Hash.sha1(clave));
         if (obj!=null) {            
@@ -57,8 +58,8 @@ public class ConsultorioController {
 
     //Método Delete para Eliminar datos en la tabla de la BD
     @DeleteMapping(value="/{id}") 
-    public ResponseEntity<Consultorio> eliminar(@PathVariable Integer id){ 
-        Consultorio obj = servicio.findById(id); 
+    public ResponseEntity<Cita_paciente> eliminar(@PathVariable Integer id){ 
+        Cita_paciente obj = servicio.findById(id); 
             if(obj!=null) //Encontró al registro
             servicio.delete(id);
             else 
@@ -69,11 +70,12 @@ public class ConsultorioController {
     //Método Put para Modificar datos en la tabla de la BD
     @PutMapping(value="/") 
     @ResponseBody
-    public ResponseEntity<Consultorio> editar(@Valid @RequestBody Consultorio dato){ 
-        Consultorio obj = servicio.findById(dato.getId_consultorio()); 
+    public ResponseEntity<Cita_paciente> editar(@Valid @RequestBody Cita_paciente dato){ 
+        Cita_paciente obj = servicio.findById(dato.getId_citapaciente()); 
         if(obj!=null) { //Lo encotró
-            //obj.setId_consultorio(dato.getId_consultorio());
-            obj.setNom_consultorio(dato.getNom_consultorio());            
+            //obj.setId_citapaciente(dato.getId_citapaciente());
+            obj.setId_horaatencion(dato.getId_horaatencion());
+            obj.setId_paciente(dato.getId_paciente());           
             servicio.save(dato); 
         } 
         else 
@@ -84,7 +86,7 @@ public class ConsultorioController {
     //Método Put para Modificar datos en la tabla de la BD    
     @GetMapping("/list") 
     @ResponseBody
-    public ResponseEntity<List<Consultorio>> consultarTodo(@RequestHeader("documento")String documento,@RequestHeader("clave")String clave){   
+    public ResponseEntity<List<Cita_paciente>> consultarTodo(@RequestHeader("documento")String documento,@RequestHeader("clave")String clave){   
         Personas obj= new Personas();
         obj=dao.login(documento, Hash.sha1(clave));        
         if (obj!=null) {            
@@ -97,7 +99,7 @@ public class ConsultorioController {
     //Método Get para Listar o mostrar por id los datos en la tabla de la BD
     @GetMapping("/list/{id}") 
     @ResponseBody
-    public ResponseEntity<Consultorio>  consultaPorId(@PathVariable Integer id,
+    public ResponseEntity<Cita_paciente>  consultaPorId(@PathVariable Integer id,
     @RequestHeader("clave")String clave,
     @RequestHeader("documento")String documento){    
         Personas obj= new Personas();

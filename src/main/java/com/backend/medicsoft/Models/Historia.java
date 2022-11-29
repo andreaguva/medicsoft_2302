@@ -8,7 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 // Para validar errores
-import javax.validation.constraints.NotEmpty;
+//import javax.validation.constraints.NotEmpty;
 //import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,26 +23,22 @@ public class Historia implements Serializable{
     @Column(name="id_historia")
     private int id_historia;
     @ManyToOne
-    @JoinColumn(name="id_cita")//Solo para las llaves foráneas
-    private Citamedica id_cita; //De esta forma se representa la llave foránea, es decir, creando un objeto de la clase   
-    @NotEmpty(message = "El campo motivocita no debe ser vacío")
+    @JoinColumn(name="id_citapaciente")//Solo para las llaves foráneas
+    private Cita_paciente id_citapaciente; //De esta forma se representa la llave foránea, es decir, creando un objeto de la clase 
     @Column(name="motivocita")
-    private String motivocita;
-    @NotEmpty(message = "El campo enfermedad no debe ser vacío")
+    private String motivocita;   
     @Column(name="enfermedad")
-    private String enfermedad;
-    @NotEmpty(message = "El campo antecedentes no debe ser vacío")
+    private String enfermedad;   
     @Column(name="antecedentes")
-    private String antecedentes;
-    @NotEmpty(message = "El campo observaciones no debe ser vacío")
+    private String antecedentes;   
     @Column(name="observaciones")
     private String observaciones;
     @Override
     public String toString() {
-        return "Historia [id_historia=" + id_historia + ", id_cita=" + id_cita + ", motivocita=" + motivocita
-                + ", enfermedad=" + enfermedad + ", antecedentes=" + antecedentes + ", observaciones=" + observaciones
-                + "]";
+        return "Historia [id_historia=" + id_historia + ", id_citapaciente=" + id_citapaciente + ", motivocita="
+                + motivocita + ", enfermedad=" + enfermedad + ", antecedentes=" + antecedentes + ", observaciones="
+                + observaciones + "]";
     }
-    
-    
+   
+     
 }

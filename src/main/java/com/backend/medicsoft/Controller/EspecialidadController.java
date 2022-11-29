@@ -3,11 +3,14 @@ package com.backend.medicsoft.Controller;
 import com.backend.medicsoft.Models.Especialidad;
 //import com.backend.medicsoft.Dao.EspecialidadDao;
 import com.backend.medicsoft.Service.EspecialidadService;
+import com.backend.medicsoft.Models.Personas;
+import com.backend.medicsoft.Dao.PersonasDao;
+//import com.backend.medicsoft.Service.PersonasService;
 
 import java.util.List;
 import javax.validation.Valid;
+import com.backend.medicsoft.Segurity.Hash;
 //import javax.validation.constraints.Null;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +21,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+//import org.springframework.web.bind.annotation.RequestHeader;
 //import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RequestParam;
 //import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,13 +39,20 @@ public class EspecialidadController {
     //private EspecialidadDao dao; 
     @Autowired
     private EspecialidadService servicio;
+    @Autowired
+    private PersonasDao dao;
     
     //Método Post para Insertar datos en la tabla de la BD
     @PostMapping(value="/")
     @ResponseBody
-    public ResponseEntity<Especialidad> agregar(@Valid @RequestBody Especialidad dato){   
-        Especialidad obj = servicio.save(dato);
-        return new ResponseEntity<>(obj, HttpStatus.OK);     
+    public ResponseEntity<Especialidad> agregar(@RequestHeader("clave")String clave,@RequestHeader("documento")String documento,@Valid @RequestBody Especialidad dato){   
+        Personas obj= new Personas();
+        obj=dao.login(documento, Hash.sha1(clave));
+        if (obj!=null) {            
+            return new ResponseEntity<>(servicio.save(dato), HttpStatus.OK); 
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); 
+        }        
     }
 
     //Método Delete para Eliminar datos en la tabla de la BD
@@ -68,16 +81,31 @@ public class EspecialidadController {
         return new ResponseEntity<>(obj, HttpStatus.OK); 
     }
 
-    //Método Put para Modificar datos en la tabla de la BD
+    //Método Put para Modificar datos en la tabla de la BD    
     @GetMapping("/list") 
-    //@ResponseBody
-    public List<Especialidad> consultarTodo(){        
-        return servicio.findAll();          
-    }
+    @ResponseBody
+    public ResponseEntity<List<Especialidad>> consultarTodo(@RequestHeader("documento")String documento,@RequestHeader("clave")String clave){   
+        Personas obj= new Personas();
+        obj=dao.login(documento, Hash.sha1(clave));        
+        if (obj!=null) {            
+            return new ResponseEntity<>(servicio.findAll(),HttpStatus.OK);
+        } else {
+           return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }                  
+    }     
 
+    //Método Get para Listar o mostrar por id los datos en la tabla de la BD
     @GetMapping("/list/{id}") 
     @ResponseBody
-    public Especialidad consultaPorId(@PathVariable Integer id){ 
-        return servicio.findById(id); 
-    }
+    public ResponseEntity<Especialidad>  consultaPorId(@PathVariable Integer id,
+    @RequestHeader("clave")String clave,
+    @RequestHeader("documento")String documento){    
+        Personas obj= new Personas();
+        obj=dao.login(documento, Hash.sha1(clave));
+        if (obj!=null) {
+            return new ResponseEntity<>(servicio.findById(id),HttpStatus.OK);            
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }         
+    }     
 }

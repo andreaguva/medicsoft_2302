@@ -1,8 +1,8 @@
 package com.backend.medicsoft.Controller;
 
-import com.backend.medicsoft.Models.Consultorio;
-//import com.backend.medicsoft.Dao.ConsultorioDao;
-import com.backend.medicsoft.Service.ConsultorioService;
+import com.backend.medicsoft.Models.Administrador;
+//import com.backend.medicsoft.Dao.MedicoDao;
+import com.backend.medicsoft.Service.AdministradorService;
 import com.backend.medicsoft.Models.Personas;
 import com.backend.medicsoft.Dao.PersonasDao;
 //import com.backend.medicsoft.Service.PersonasService;
@@ -32,33 +32,47 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/consultorio")
-public class ConsultorioController {
+@RequestMapping("/administrador")
+public class AdministradorController {
 
     //@Autowired
-    //private ConsultorioDao dao; 
+    //private MedicoDao dao; 
     @Autowired
-    private ConsultorioService servicio;
+    private AdministradorService servicio;
     @Autowired
     private PersonasDao dao;
     
     //Método Post para Insertar datos en la tabla de la BD
     @PostMapping(value="/")
     @ResponseBody
-    public ResponseEntity<Consultorio> agregar(@RequestHeader("clave")String clave,@RequestHeader("documento")String documento,@Valid @RequestBody Consultorio dato){   
+    public ResponseEntity<Administrador> agregar(@RequestHeader("clave")String clave,@RequestHeader("documento")String documento,@Valid @RequestBody Administrador dato){   
         Personas obj= new Personas();
         obj=dao.login(documento, Hash.sha1(clave));
-        if (obj!=null) {            
+        if (obj!=null) { 
+            dato.setClave_administrador(Hash.sha1(dato.getClave_administrador()));                                
             return new ResponseEntity<>(servicio.save(dato), HttpStatus.OK); 
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); 
-        }         
+        }   
     }
+    /*//Método Post para Insertar datos en la tabla de la BD
+    @PostMapping(value="/")
+    @ResponseBody
+    public ResponseEntity<Paciente> agregar(@RequestHeader("clave")String clave,@RequestHeader("documento")String documento,@Valid @RequestBody Paciente dato){      
+        Personas obj= new Personas();
+        obj=dao.login(documento, Hash.sha1(clave));
+        if (obj!=null) {  
+            dato.setClave_paciente(Hash.sha1(dato.getClave_paciente()));       
+            return new ResponseEntity<>(servicio.save(dato), HttpStatus.OK); 
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); 
+        }            
+    } */
 
     //Método Delete para Eliminar datos en la tabla de la BD
     @DeleteMapping(value="/{id}") 
-    public ResponseEntity<Consultorio> eliminar(@PathVariable Integer id){ 
-        Consultorio obj = servicio.findById(id); 
+    public ResponseEntity<Administrador> eliminar(@PathVariable Integer id){ 
+        Administrador obj = servicio.findById(id); 
             if(obj!=null) //Encontró al registro
             servicio.delete(id);
             else 
@@ -69,22 +83,31 @@ public class ConsultorioController {
     //Método Put para Modificar datos en la tabla de la BD
     @PutMapping(value="/") 
     @ResponseBody
-    public ResponseEntity<Consultorio> editar(@Valid @RequestBody Consultorio dato){ 
-        Consultorio obj = servicio.findById(dato.getId_consultorio()); 
-        if(obj!=null) { //Lo encotró
-            //obj.setId_consultorio(dato.getId_consultorio());
-            obj.setNom_consultorio(dato.getNom_consultorio());            
-            servicio.save(dato); 
-        } 
-        else 
-        return new ResponseEntity<>(obj, HttpStatus.INTERNAL_SERVER_ERROR); 
-        return new ResponseEntity<>(obj, HttpStatus.OK); 
+    public ResponseEntity<Administrador> editar(@RequestHeader("clave")String clave,@RequestHeader("documento")String documento,@Valid @RequestBody Administrador dato){ 
+        Personas obj= new Personas();
+        obj=dao.login(documento, Hash.sha1(clave));
+        if(obj!=null){
+            dato.setClave_administrador(Hash.sha1(dato.getClave_administrador()));
+            Administrador objeto = servicio.findById(dato.getId_administrador()); 
+            if(objeto!=null) { //Lo encotró
+                //objeto.setId_administrador(dato.getId_administrador());
+                objeto.setDocumento_administrador(dato.getDocumento_administrador());
+                objeto.setClave_administrador(dato.getClave_administrador());
+                objeto.setRol(dato.getRol());                
+                servicio.save(dato); 
+            } 
+            else 
+            return new ResponseEntity<>(objeto, HttpStatus.INTERNAL_SERVER_ERROR); 
+            return new ResponseEntity<>(objeto, HttpStatus.OK); 
+        }else{
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     //Método Put para Modificar datos en la tabla de la BD    
     @GetMapping("/list") 
     @ResponseBody
-    public ResponseEntity<List<Consultorio>> consultarTodo(@RequestHeader("documento")String documento,@RequestHeader("clave")String clave){   
+    public ResponseEntity<List<Administrador>> consultarTodo(@RequestHeader("documento")String documento,@RequestHeader("clave")String clave){   
         Personas obj= new Personas();
         obj=dao.login(documento, Hash.sha1(clave));        
         if (obj!=null) {            
@@ -97,7 +120,7 @@ public class ConsultorioController {
     //Método Get para Listar o mostrar por id los datos en la tabla de la BD
     @GetMapping("/list/{id}") 
     @ResponseBody
-    public ResponseEntity<Consultorio>  consultaPorId(@PathVariable Integer id,
+    public ResponseEntity<Administrador>  consultaPorId(@PathVariable Integer id,
     @RequestHeader("clave")String clave,
     @RequestHeader("documento")String documento){    
         Personas obj= new Personas();

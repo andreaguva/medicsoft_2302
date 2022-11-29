@@ -39,9 +39,8 @@ public class PacienteService {
 
     //Creamos el método para validar login la Tabla de la BD
     /*@Transactional(readOnly=true)
-    public Paciente login(String documento, String clave, String rol) {
-        return dao.login(documento, clave, rol);
-    
+    public Paciente login(String documento, String clave) {
+        return dao.login(documento, clave);
     }*/
 
 }
